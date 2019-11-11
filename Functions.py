@@ -1,5 +1,5 @@
 #Lukas and Jenjira
-#Created in part by following and making neacecary changes to a guide at https://pythonprogramming.net
+#Voteclassifier created following and making neacecary changes for scalability to a guide at https://pythonprogramming.net
 #Work in progress
 import os
 import pickle
@@ -19,16 +19,14 @@ class VoteClassifier(ClassifierI):
         for c in self._classifiers:
             v = c.classify(features)
             votes.append(v)
-        # Utkommenterat för att returnera neutralt när confidence är lågt.
-        # if(mode(votes) == "neg" and votes.count('pos') == 3):
-        # return "Neutral"
-        # elif(mode(votes) == "pos" and votes.count("neg") == 3):
-        # return "Neutral"
-
-        #Ifall vi bedömmer att algoritmen för ofta väljer neg över pos.
-        if(mode(votes) == "neg" and votes.count('neg') == 4):
+        choice_votes = votes.count(mode(votes))
+        conf = choice_votes / len(votes)
+        if(conf < 0.6):
             return 'pos'
-        return mode(votes)
+        elif(conf < 0.73 and mode(votes) == 'neg'):
+            return 'neu'
+        else:
+            return mode(votes)
 
     def confidence(self, features):
         votes = []

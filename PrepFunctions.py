@@ -157,6 +157,12 @@ def loadMultipleDirectoriesToOneList(parentDirectory):
 
     return returnList
 
+def returnCommonWords(allWords, limit):
+    word_features = []
+    for word, frequency in allWords.most_common(limit):
+        word_features.append(word)
+    return word_features
+
 def loadDatasetFromSingleFilesOnlyStopWords(posfile, negfile):
     short_pos = open(posfile, "r", encoding = "ISO-8859-1").read()
     short_neg = open(negfile, "r", encoding = "ISO-8859-1").read()
@@ -185,9 +191,9 @@ def loadDatasetFromSingleFilesOnlyStopWords(posfile, negfile):
     #short_neg_words = word_tokenize(short_neg)
 
     all_words = nltk.FreqDist(all_words)
-    word_features = list(all_words.keys())[:5000]
-    savePickle(word_features, "picklefiles_eng/onlyStopwords10000/word_features.pickle")
-    savePickle(documents, "picklefiles_eng/onlyStopwords10000/documents.pickle")
+    word_features = returnCommonWords(all_words, 5000)
+    savePickle(word_features, "picklefiles_eng/word_features.pickle")
+    savePickle(documents, "picklefiles_eng/documents.pickle")
 
     featuresets = [(find_features(rev, word_features), category) for (rev,category) in documents]
     random.shuffle(featuresets)
@@ -238,7 +244,6 @@ def loadDatasetFromSingleFilesOnlyStopWords(posfile, negfile):
     for r in short_pos.split('\n'):
         documents.append((r, "pos"))
         words = word_tokenize(r)
-        #pos = nltk.pos_tag(words)
         for w in words:
             if w not in stopWords and not nltk.re.match(r'^[_\W]+$', w) and len(w) > 1:
                 all_words.append(w.lower())
@@ -246,7 +251,6 @@ def loadDatasetFromSingleFilesOnlyStopWords(posfile, negfile):
     for r in short_neg.split('\n'):
         documents.append((r, "neg"))
         words = word_tokenize(r)
-        # pos = nltk.pos_tag(words)
         for w in words:
             if w not in stopWords and not nltk.re.match(r'^[_\W]+$', w) and len(w) > 1:
                 all_words.append(w.lower())

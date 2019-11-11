@@ -44,19 +44,17 @@ if(checkPicklefiles() == False):
     savePickle(NuSVC_classifier, "picklefiles_eng/NUSVCClassifier.pickle")
     print("NuSVC classifier saved")
 
+#Code to print accuracy of each classifier, outcommented due to consuming a lot of time.
 """
-#print("Basic classifier accuracy percent:", (nltk.classify.accuracy(classifier, testing_set))*100)
+#print("Naive Bayes accuracy percent:", (nltk.classify.accuracy(classifier, testing_set))*100)
 #print("Multinomial Naive Bayes accuracy:", (nltk.classify.accuracy(MNB_classifier, testing_set))*100)
-#print("BernoulliNB_classifier accuracy percent:", (nltk.classify.accuracy(BernoulliNB_classifier, testing_set))*100)
-#print("LogisticRegression_classifier accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
-#print("SGDClassifier_classifier accuracy percent:", (nltk.classify.accuracy(SGDClassifier_classifier, testing_set))*100)
-#print("LinearSVC_classifier accuracy percent:", (nltk.classify.accuracy(LinearSVC_classifier, testing_set))*100)
-#print("NuSVC_classifier accuracy percent:", (nltk.classify.accuracy(NuSVC_classifier, testing_set))*100)
+#print("BernoulliNB accuracy percent:", (nltk.classify.accuracy(BernoulliNB_classifier, testing_set))*100)
+#print("LogisticRegression accuracy percent:", (nltk.classify.accuracy(LogisticRegression_classifier, testing_set))*100)
+#print("SGDClassifier accuracy percent:", (nltk.classify.accuracy(SGDClassifier_classifier, testing_set))*100)
+#print("LinearSVC accuracy percent:", (nltk.classify.accuracy(LinearSVC_classifier, testing_set))*100)
+#print("NuSVC accuracy percent:", (nltk.classify.accuracy(NuSVC_classifier, testing_set))*100)
 #print("voted_classifier accuracy percent:", (nltk.classify.accuracy(voted_classifier, testing_set)) * 100)
 """
-#messageList = loadTextfilesToList("textfiles")
-#translatedMessageList = translateMessageListToEnglish(messageList)
-#savePickle(translatedMessageList, "translatedmessages.pickle")
 
 def prepareAnalysis(swe):
     messageList = loadMultipleDirectoriesToOneList("outputEmails")

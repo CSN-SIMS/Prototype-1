@@ -8,7 +8,7 @@ import datetime, time
 
 newFile = False
 
-training_set = loadPickleFile("picklefiles_eng/trainingset.pickle")
+#training_set = loadPickleFile("picklefiles_eng/trainingset.pickle")
 testing_set = loadPickleFile("picklefiles_eng/testingset.pickle")
 document = loadPickleFile("picklefiles_eng/trainingset.pickle")
 word_features = loadPickleFile("picklefiles_eng/word_features.pickle")

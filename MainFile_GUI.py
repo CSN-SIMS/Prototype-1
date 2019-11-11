@@ -32,15 +32,6 @@ def backgroundSet(self):
 selectedFolderInputFiles = ''
 errorTextFolderSelect = ''
 
-def inputFolderDialog():
-    global selectedFolderInputFiles
-    global errorTextFolderSelect
-    try:
-        # Ask for directory with input files
-        selectedFolderInputFiles = filedialog.askdirectory()
-    except FileNotFoundError:
-        errorTextFolderSelect = "The system cannot find the path specified."
-
 # Popup message with result from page 1
 # Gets the selected folder by the user and uses keywordSearch in txt files, then presents categories and file names
 # Sentiment analysis of the output sub-directories and saving the result in excel
@@ -239,7 +230,7 @@ class Page1(Page):
        infoMessagePage1.insert(END, "\n")
        infoMessagePage1.insert(END, "This program has the following abilities: \n")
        infoMessagePage1.insert(END, "\n")
-       infoMessagePage1.insert(END, "- \"Email Analysis\" menu does Categorization and Sentiment analysis on text files in \n")
+       infoMessagePage1.insert(END, "- \"Text Analysis\" menu does Categorization and Sentiment analysis on text files in \n")
        infoMessagePage1.insert(END, "\t Swedish or English from a given input folder, \n")
        infoMessagePage1.insert(END, "\t presents the results and saves them in excel file \n\n")
        infoMessagePage1.insert(END, "- \"Direct Input\" does Sentiment analysis on direct input in Swedish or English")
@@ -295,12 +286,28 @@ class Page2(Page):
                           bg='white', font=(FontStyle, 12))
        openFolder.place(relx=0.05, rely=0.7, relwidth=0.4, relheight=0.2)
 
-       buttonOpenFolder = Button(optionCanvas, text="Browse", font=(FontStyle, 12), bg='#EE7C7D', highlightcolor='#d65859', activebackground='#f2d9e6',
-                                 command=lambda: inputFolderDialog())
+       buttonOpenFolder = Button(optionCanvas, text="Browse", font=(FontStyle, 12), bg='#EE7C7D', highlightcolor='#d65859',
+                                 activebackground='#f2d9e6')
        buttonOpenFolder.place(relx=0.5, rely=0.7, relwidth=0.3, relheight=0.15)
 
        selectedFolderLabel = Label(optionCanvas, text="", justify='left', bg='white', font=(FontStyle, 12))
        selectedFolderLabel.place(relx=0.42, rely=0.85, relwidth=0.4, relheight=0.2)
+
+       # when button Browse is clicked it presents the selected input folder to the user
+       def buttonBrowseInputClick(event):
+           global selectedFolderInputFiles
+           global errorTextFolderSelect
+           try:
+               # Ask for directory with input files
+               selectedFolderInputFiles = filedialog.askdirectory()
+           except FileNotFoundError:
+               errorTextFolderSelect = "The system cannot find the path specified."
+           except PermissionError:
+               errorTextFolderSelect = "Permission denied for this folder."
+           folder = selectedFolderInputFiles.split("/")
+           selectedFolderLabel.configure(text="Folder selected: " + folder[-1])
+
+       buttonOpenFolder.bind("<Button-1>", buttonBrowseInputClick)
 
        buttonAnalyzeInput = Button(lower_frame, text="Analyze", font=(FontStyle, 12), bg='#b3b3b3',
                                    activebackground='#f2d9e6',
@@ -310,11 +317,8 @@ class Page2(Page):
        buttonAnalyzeInput.place(relx=0.4, rely=0.89, relwidth=0.2, relheight=0.1)
 
 
-        # when button Analyze is clicked display Loading Progress bar and present the selected input folder to the user
+        # when button Analyze is clicked it displays Loading Progress bar
        def buttonAnalyzeInputClick(event):
-           global selectedFolderInputFiles
-           folder = selectedFolderInputFiles.split("/")
-           selectedFolderLabel.configure(text="Folder selected: " + folder[-1])
            popupWindowLoading = Toplevel()
            popupWindowLoading.wm_title("Loading")
            popupWindowLoading.wm_geometry("300x40")
@@ -387,7 +391,7 @@ class MainView(Frame):
                          activebackground='#f2d9e6',
                          command=p2.lift)
         button2.place(relx=0.4, rely=0.25, relwidth=0.2, relheight=0.35)
-        button3 = Button(button_frame, text="Direct input", font=(FontStyle, 14), bg='#EE7C7D',
+        button3 = Button(button_frame, text="Direct Input", font=(FontStyle, 14), bg='#EE7C7D',
                          activebackground='#f2d9e6',
                          command=p3.lift)
         button3.place(relx=0.7, rely=0.25, relwidth=0.2, relheight=0.35)

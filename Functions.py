@@ -9,6 +9,44 @@ from nltk.classify import ClassifierI
 from statistics import mode
 from collections import Counter
 
+"""
+Licence for scikit-learn
+New BSD License
+
+Copyright (c) 2007–2019 The scikit-learn developers.
+All rights reserved.
+
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+  a. Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
+  b. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the distribution.
+  c. Neither the name of the Scikit-learn Developers  nor the names of
+     its contributors may be used to endorse or promote products
+     derived from this software without specific prior written
+     permission. 
+"""
+"""
+Licence for NLTK
+Copyright (C) 2001-2019 NLTK Project
+
+Licensed under the Apache License, Version 2.0 (the 'License');
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an 'AS IS' BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+"""
+
 #Ärver från ClassifierI från NLTK, används för att räkna vad alla algoritmer bedömmer och låter varje algoritm 'rösta' på resultatet, 7 algoritmer från scikit används i implementeringen.
 class VoteClassifier(ClassifierI):
     def __init__(self, *classifiers):
